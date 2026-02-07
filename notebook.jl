@@ -36,12 +36,6 @@ md"""
 Creation d'un slider lié a la variable x. Ceci va permettre de faire varier la pente.
 """
 
-# ╔═╡ 0fd26433-f359-48f5-a3c2-552a04a4e6d8
-# ╠═╡ disabled = true
-#=╠═╡
-@bind x Slider(-8:0.1:8, default=0)
-  ╠═╡ =#
-
 # ╔═╡ dba2f2a3-3aea-49d6-b4a8-ba9d53e00a49
 md"""
 - Passons a une version plus visuelle
@@ -96,28 +90,32 @@ md"""
 # Gradient en dimension 2
 """
 
-# ╔═╡ f789b88a-794c-4f1e-ae4e-40f799836244
-@bind x Slider(-5:0.1:5, default=3, show_value=true)
-
 # ╔═╡ eb7c9e7c-0408-11f1-aca7-05ee959e6249
+#=╠═╡
 begin
 	f(x) = (x-2)^2 * (x+2)^2
 	df(x) = (f(x+0.0001)-f(x))/0.0001
 
 	f(x), df(x)
 end
+  ╠═╡ =#
 
 # ╔═╡ c1b79d0e-4e49-4084-b963-5f96e8659dfe
+#=╠═╡
 md"""
 On peut maintenant changer la valeur de x et on a **f($(x)) = $(f(x))**
 """
+  ╠═╡ =#
 
 # ╔═╡ 3202b71a-574f-42b8-b932-2f16f43d9143
+#=╠═╡
 md"""
 Et voir pour cette valeur de x le coefficient directeur en x **$(df(x))**
 """
+  ╠═╡ =#
 
 # ╔═╡ fb543a3e-3211-431e-b6c8-d78a72e259e2
+#=╠═╡
 begin
 	using Plots
 
@@ -125,11 +123,13 @@ begin
 	plot(xs, f.(xs))
 	scatter!([x], [f(x)])
 end
+  ╠═╡ =#
 
 # ╔═╡ c228653a-067f-47d1-866b-e0a5eeefd594
 @bind y Slider(-5:0.1:5, default=4, show_value=true)
 
 # ╔═╡ 6e38e8ea-6383-45ba-b7d3-035811a194d6
+#=╠═╡
 begin
     g(x,y) = x^2 + y^2
 
@@ -147,6 +147,18 @@ begin
     )
     scatter!([x], [y], [g(x,y)], color=:red, markersize=5)  # point actuel
 end
+  ╠═╡ =#
+
+# ╔═╡ f789b88a-794c-4f1e-ae4e-40f799836244
+#=╠═╡
+@bind x Slider(-5:0.1:5, default=3, show_value=true)
+  ╠═╡ =#
+
+# ╔═╡ 0fd26433-f359-48f5-a3c2-552a04a4e6d8
+# ╠═╡ disabled = true
+#=╠═╡
+@bind x Slider(-8:0.1:8, default=0)
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """

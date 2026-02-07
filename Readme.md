@@ -1,11 +1,22 @@
-- Objectif: Comprendre le fonctionnement d'un neurone
-- Run:
-  - from [Julia](https://julialang.org) we use Pluto:
+#  Comprendre le fonctionnement d'un neurone
+
+- Pour les détails la roadmap est juste après
+- Executer le bousin:
+  - `nix develop`
+  - depuis [Julia](https://julialang.org) on va démarer Pluto:
 ```Julia
 using Pluto
 Pluto.run()
 ```
-  - and load the notebook
+  - et on peut charger le notebook
+- Status:
+  - [x] Étape 0 — Vision globale
+  - [x] 🧮 Étape 1 — Comprendre la dérivée comme "sensibilité"
+  - [x] 📉 Étape 2 — Minimisation d’une fonction (descente de gradient 1D)
+  - [ ] 🔗 Étape 4 — Règle de la chaîne (LE cœur du deep learning)
+  - [ ] ⚙️ Étape 5 — Construire un neurone à la main
+  - [ ] 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
+  - [ ] 🧱 Étape 7 — Plusieurs entrées
 
 ---
 
@@ -35,9 +46,9 @@ Et tout repose sur :
 → gradients
 → descente de gradient
 
-# 🧮 Étape 1 — Comprendre la dérivée comme "sensibilité"
+## 🧮 Étape 1 — Comprendre la dérivée comme "sensibilité"
 
-## Objectif
+### Objectif
 
 Comprendre :
 
@@ -71,9 +82,9 @@ Intuition clé :
 
 > Une dérivée mesure une influence.
 
-# 📉 Étape 2 — Minimisation d’une fonction (descente de gradient 1D)
+## 📉 Étape 2 — Minimisation d’une fonction (descente de gradient 1D)
 
-## Objectif
+### Objectif
 
 Comprendre comment on "apprend" sans neurone.
 
@@ -104,7 +115,7 @@ Concept clé :
 
 > Apprendre = descendre une pente.
 
-# 🌄 Étape 3 — Gradient en dimension 2+
+## 🌄 Étape 3 — Gradient en dimension 2+
 
 Passer à :
 
@@ -126,7 +137,7 @@ Intuition clé :
 
 > Le gradient indique "où corriger".
 
-# 🔗 Étape 4 — Règle de la chaîne (LE cœur du deep learning)
+## 🔗 Étape 4 — Règle de la chaîne (LE cœur du deep learning)
 
 C’est le moment le plus important.
 
@@ -157,7 +168,7 @@ Concept clé :
 C’est exactement :
 **backpropagation**
 
-# ⚙️ Étape 5 — Construire un neurone à la main
+## ⚙️ Étape 5 — Construire un neurone à la main
 
 Créer un neurone simple :
 
@@ -184,7 +195,7 @@ dL/dw
 dL/db
 ```
 
-# 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
+## 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
 
 Faire un mini système :
 
@@ -200,7 +211,7 @@ Puis :
 
 C’est LE moment "aha".
 
-# 🧱 Étape 7 — Plusieurs entrées
+## 🧱 Étape 7 — Plusieurs entrées
 
 Passer à :
 
@@ -217,7 +228,7 @@ Comprendre :
 
 > Un neurone = séparateur linéaire.
 
-# 🌐 Étape 8 — Plusieurs neurones (MLP)
+## 🌐 Étape 8 — Plusieurs neurones (MLP)
 
 Construire :
 
@@ -236,7 +247,7 @@ Moment clé :
 > Un seul neurone est limité.
 > Plusieurs = intelligence émergente.
 
-# 🧪 Étape 9 — Pluto vs Clojure (comment mixer)
+## 🧪 Étape 9 — Pluto vs Clojure (comment mixer)
 
 ### Pluto → idéal pour :
 

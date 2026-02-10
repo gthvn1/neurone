@@ -36,6 +36,12 @@ md"""
 Creation d'un slider lié a la variable x. Ceci va permettre de faire varier la pente.
 """
 
+# ╔═╡ 0fd26433-f359-48f5-a3c2-552a04a4e6d8
+# ╠═╡ disabled = true
+#=╠═╡
+@bind x Slider(-8:0.1:8, default=0)
+  ╠═╡ =#
+
 # ╔═╡ dba2f2a3-3aea-49d6-b4a8-ba9d53e00a49
 md"""
 - Passons a une version plus visuelle
@@ -48,74 +54,35 @@ md"""
 """
 
 # ╔═╡ 1ffce1fc-86cf-4e57-8bc4-879ca3023c72
-@bind w Slider(-10:0.1:10, default=8, show_value=true)
-
-# ╔═╡ 771b809e-ff2c-4040-a909-731808493194
-begin
-	f1(w) = (w - 3)^2
-
-	h = 0.0001
-	df1(w) = (f1(w + h) - f1(w)) / h
-
-md"""
-| variable | valeur |
-|----------|--------|
-| w        | $(w)   |
-| f(w)     | $(f1(w)) |
-| df(w)    | $(df1(w)) |
-"""
-end
-
-# ╔═╡ 0446c1ea-3ba7-46f8-b56a-8720cf16ca6e
-begin
-	n = 0.1
-	w_next = w - n * df1(w)
-	w_next
-end
-
-# ╔═╡ e1aeed1d-fcc2-49cc-b1d3-4194115f99f1
-md"""
-- Pour w=8, on a f1(w) on a 25 et pour la pente on obtient 10.
-- **n** est la taille du pas (learning rate, ici 0.1)
-Donc:
-- `w_next ~ 7`, ça c'est le premier pas
-
-On va donc maintenant partir de w=7 on on recalcul le *w_next*. On va trouver une valeur environ égale a 6.19 et on continue. On devrait arriver au final à w=3.
-Cela fonctionne parce que si on va plus loin que 3 la pente va changer et on reviendra vers 3.
-
-"""
+@bind x0 Slider(-10:0.1:10, default=8, show_value=true)
 
 # ╔═╡ 2398120a-ef56-4c61-b618-c0a920d0f57c
 md"""
 # Gradient en dimension 2
 """
 
+# ╔═╡ f789b88a-794c-4f1e-ae4e-40f799836244
+@bind x Slider(-5:0.1:5, default=3, show_value=true)
+
 # ╔═╡ eb7c9e7c-0408-11f1-aca7-05ee959e6249
-#=╠═╡
 begin
 	f(x) = (x-2)^2 * (x+2)^2
 	df(x) = (f(x+0.0001)-f(x))/0.0001
 
 	f(x), df(x)
 end
-  ╠═╡ =#
 
 # ╔═╡ c1b79d0e-4e49-4084-b963-5f96e8659dfe
-#=╠═╡
 md"""
 On peut maintenant changer la valeur de x et on a **f($(x)) = $(f(x))**
 """
-  ╠═╡ =#
 
 # ╔═╡ 3202b71a-574f-42b8-b932-2f16f43d9143
-#=╠═╡
 md"""
 Et voir pour cette valeur de x le coefficient directeur en x **$(df(x))**
 """
-  ╠═╡ =#
 
 # ╔═╡ fb543a3e-3211-431e-b6c8-d78a72e259e2
-#=╠═╡
 begin
 	using Plots
 
@@ -123,42 +90,81 @@ begin
 	plot(xs, f.(xs))
 	scatter!([x], [f(x)])
 end
-  ╠═╡ =#
+
+# ╔═╡ 29eb14be-f93d-4079-a9c2-98fe870a74d4
+begin
+		h = 1e-4
+		η = 0.1
+		
+		# Fonction a minimiser
+		g(x) = (x - 3)^2
+	
+		# Derivé de g en x (c'est ce qui nous donne la pente)
+		dg(x) = (g(x + h) - g(x))/h
+
+		x_next(x0) = x0 - η * dg(x0)
+	
+		md"""
+	- le pas de différentiation (finite difference step) est **h = $(h)**
+	- le taux d'apprentissage (learning rate) est **η = $(η)
+	
+	| variable | valeur   |
+	|----------|----------|
+	| x        | $(x)     |
+	| g(x)     | $(g(x))  |
+	| dg(x)    | $(dg(x)) |
+	"""
+	
+end
+
+# ╔═╡ e1aeed1d-fcc2-49cc-b1d3-4194115f99f1
+md"""
+- Pour x0=$(x0), on a `x_next` = $(x_next(x0))
+
+Exemple:
+- Pour x0 = 8, on `x_next` = $(x_next(8)), ça c'est le premier pas
+
+On va donc maintenant partir de x0=$(x_next(8)) on on recalcul le *x_next*. On va trouver une valeur environ égale a 6.19 et on continue. On devrait arriver au final à x=3.
+Cela fonctionne parce que si on va plus loin que 3 la pente va changer et on reviendra vers 3.
+
+"""
 
 # ╔═╡ c228653a-067f-47d1-866b-e0a5eeefd594
 @bind y Slider(-5:0.1:5, default=4, show_value=true)
 
 # ╔═╡ 6e38e8ea-6383-45ba-b7d3-035811a194d6
-#=╠═╡
 begin
-    g(x,y) = x^2 + y^2
-
+	g2(x, y) = x^2 + y^2
+	
     Xs = -5:0.1:5
     Ys = -5:0.1:5
-    Z = [g(xi, yi) for xi in Xs, yi in Ys]
+    Z = [g2(xi, yi) for xi in Xs, yi in Ys]
 
     surface(
         Xs, Ys, Z,
         alpha = 0.6,
         xlabel = "x (poids 1)",   # nom de l'axe X
         ylabel = "y (poids 2)",   # nom de l'axe Y
-        zlabel = "g(x,y) (erreur)",  # nom de l'axe Z
-        title = "Visualisation de g(x,y) = x^2 + y^2"
+        zlabel = "g2(x,y) (erreur)",  # nom de l'axe Z
+        title = "Visualisation de g2(x,y) = x^2 + y^2"
     )
-    scatter!([x], [y], [g(x,y)], color=:red, markersize=5)  # point actuel
+    scatter!([x], [y], [g2(x,y)], color=:red, markersize=5)  # point actuel
 end
-  ╠═╡ =#
 
-# ╔═╡ f789b88a-794c-4f1e-ae4e-40f799836244
-#=╠═╡
-@bind x Slider(-5:0.1:5, default=3, show_value=true)
-  ╠═╡ =#
+# ╔═╡ 42f0ee3a-7489-49f1-8244-a4330a640b46
+begin
+	# Derivé de g2 par rapport a x
+	dg2_dx(x,y) = (g2(x+h, y) - g2(x, y)) / h
 
-# ╔═╡ 0fd26433-f359-48f5-a3c2-552a04a4e6d8
-# ╠═╡ disabled = true
-#=╠═╡
-@bind x Slider(-8:0.1:8, default=0)
-  ╠═╡ =#
+	# Derivé de g2 par rapport a y
+	dg2_dy(x,y) = (g2(x, y+h) - g2(x, y)) / h
+
+	# On peut donc calculer les x et y suivants qui sont:
+	xsuivant(x, y) = x - η * dg2_dx(x, y)
+	ysuivant(x, y) = y - η * dg2_dy(x, y)
+	
+	xsuivant(x,y), ysuivant(x,y)
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1323,13 +1329,13 @@ version = "1.13.0+0"
 # ╟─dba2f2a3-3aea-49d6-b4a8-ba9d53e00a49
 # ╠═fb543a3e-3211-431e-b6c8-d78a72e259e2
 # ╟─3d995e57-77d2-402a-87b6-b551a8cfd853
-# ╠═771b809e-ff2c-4040-a909-731808493194
-# ╟─1ffce1fc-86cf-4e57-8bc4-879ca3023c72
-# ╠═0446c1ea-3ba7-46f8-b56a-8720cf16ca6e
-# ╟─e1aeed1d-fcc2-49cc-b1d3-4194115f99f1
+# ╠═29eb14be-f93d-4079-a9c2-98fe870a74d4
+# ╠═1ffce1fc-86cf-4e57-8bc4-879ca3023c72
+# ╠═e1aeed1d-fcc2-49cc-b1d3-4194115f99f1
 # ╟─2398120a-ef56-4c61-b618-c0a920d0f57c
 # ╠═6e38e8ea-6383-45ba-b7d3-035811a194d6
 # ╠═f789b88a-794c-4f1e-ae4e-40f799836244
 # ╠═c228653a-067f-47d1-866b-e0a5eeefd594
+# ╠═42f0ee3a-7489-49f1-8244-a4330a640b46
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

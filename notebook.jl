@@ -166,6 +166,19 @@ begin
 	xsuivant(x,y), ysuivant(x,y)
 end
 
+# ╔═╡ fee22155-7083-4135-b40a-de42f3d9e44b
+md"""
+# Regle de la chaine, backpropagation
+
+- La régle de la chaine est une propagation de la dérivée. Dans l'exemple précedent on avait directement `dg2_dx` ou `dg2_dy`. Mais la dérivée n'est pas toujours obtenue de façon directe. On doit propager la dérivée.
+
+- Si `h(x)=f(g(x))`, où f et g sont deux fonctions différentiables, alors la dérivée de h est donnée par : `h′(x)=f′(g(x))·g′(x)`
+
+- *Example*:
+  - soit h(x) = sin(x^2), alors pour g(x) = x^2 and f(x)=sin(x) on a:
+    - h'(x) = sin(x^2).2x
+"""
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -1337,5 +1350,6 @@ version = "1.13.0+0"
 # ╠═f789b88a-794c-4f1e-ae4e-40f799836244
 # ╠═c228653a-067f-47d1-866b-e0a5eeefd594
 # ╠═42f0ee3a-7489-49f1-8244-a4330a640b46
+# ╠═fee22155-7083-4135-b40a-de42f3d9e44b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

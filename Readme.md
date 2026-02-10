@@ -308,3 +308,246 @@ Puis :
 ```
 classifier des points 2D
 ```
+
+---
+
+Parfait. On va faire la chaîne complète, très lentement, et en gardant exactement ton intuition sur
+“les autres variables sont des constantes”.
+
+On part d’un neurone simple.
+
+---
+
+## 1️⃣ Le neurone comme composition de fonctions
+
+On a 3 étapes :
+
+1. Somme pondérée
+   [
+   z = w_1 x_1 + w_2 x_2 + b
+   ]
+
+2. Activation
+   [
+   y = \sigma(z)
+   ]
+
+3. Erreur
+   [
+   E = \frac12 (y - y_{\text{vrai}})^2
+   ]
+
+Donc en réalité :
+
+[
+w_i \rightarrow z \rightarrow y \rightarrow E
+]
+
+C’est une fonction composée.
+
+---
+
+## 2️⃣ On veut quoi exactement ?
+
+On veut savoir :
+
+[
+\frac{\partial E}{\partial w_i}
+]
+
+C’est-à-dire :
+
+> Si je change légèrement le poids (w_i), comment l’erreur change ?
+
+---
+
+## 3️⃣ La chaîne complète (version simple)
+
+La règle de la chaîne donne :
+
+[
+\frac{\partial E}{\partial w_i}
+===============================
+
+\frac{\partial E}{\partial y}
+\cdot
+\frac{\partial y}{\partial z}
+\cdot
+\frac{\partial z}{\partial w_i}
+]
+
+C’est exactement comme :
+
+[
+h(x) = f(g(u(x)))
+\Rightarrow
+h'(x) = f'(g(u)) \cdot g'(u) \cdot u'(x)
+]
+
+---
+
+## 4️⃣ Calcul des 3 morceaux (un par un)
+
+### a) Dérivée de l’erreur par rapport à y
+
+[
+E = \frac12 (y - y_{\text{vrai}})^2
+]
+
+Donc :
+
+[
+\frac{\partial E}{\partial y} = (y - y_{\text{vrai}})
+]
+
+Intuition :
+si y est trop grand → erreur positive
+si y est trop petit → erreur négative
+
+---
+
+### b) Dérivée de y par rapport à z
+
+[
+y = \sigma(z)
+]
+
+Pour la sigmoid :
+
+[
+\frac{\partial y}{\partial z} = \sigma(z)(1 - \sigma(z))
+]
+
+Donc :
+
+[
+\frac{\partial y}{\partial z} = y(1-y)
+]
+
+---
+
+### c) Dérivée de z par rapport à w_i
+
+[
+z = w_1 x_1 + w_2 x_2 + b
+]
+
+On dérive par rapport à (w_i).
+
+Tous les autres termes sont constants.
+
+Il reste juste :
+
+[
+\frac{\partial z}{\partial w_i} = x_i
+]
+
+C’est exactement ce que tu as compris avec :
+
+> f(x,y) = x + y → dérivée par rapport à x = 1 car y est constant.
+
+---
+
+## 5️⃣ On assemble tout
+
+[
+\frac{\partial E}{\partial w_i}
+===============================
+
+(y - y_{\text{vrai}})
+\cdot
+y(1-y)
+\cdot
+x_i
+]
+
+C’est LE résultat central.
+
+---
+
+## 6️⃣ Interprétation très intuitive
+
+Chaque facteur a un sens :
+
+* (y - y_{\text{vrai}})
+  → à quel point on se trompe
+
+* (y(1-y))
+  → à quel point le neurone réagit au changement de z
+
+* (x_i)
+  → à quel point ce poids participe au résultat
+
+Donc :
+
+> Si (x_i = 0) → ce poids ne joue aucun rôle → gradient = 0
+
+C’est très logique.
+
+---
+
+## 7️⃣ Et là tu vois le lien profond avec la règle de la chaîne
+
+On a littéralement :
+
+[
+w_i \rightarrow z \rightarrow y \rightarrow E
+]
+
+Et on “remonte” :
+
+* erreur → sortie → somme → poids
+
+C’est exactement ça la **backpropagation**.
+
+---
+
+## 8️⃣ Image mentale importante (la plus juste)
+
+Pense à une chaîne :
+
+```
+w_i ──► z ──► y ──► E
+```
+
+La dérivée remonte :
+
+```
+∂E/∂w_i =
+(∂E/∂y)
+× (∂y/∂z)
+× (∂z/∂w_i)
+```
+
+C’est juste :
+
+> la règle de la chaîne appliquée à un système en cascade.
+
+---
+
+## 9️⃣ Le moment clé à retenir
+
+Tu as débloqué le point le plus difficile :
+
+> Quand on dérive par rapport à w_i, tous les autres w_j sont des constantes.
+
+C’est exactement ça qui rend le calcul possible.
+
+Et c’est ça qui permet :
+
+* un gradient pour w1
+* un gradient pour w2
+* un gradient pour chaque poids
+
+Indépendamment.
+
+---
+
+## 10️⃣ Question pour vérifier un déclic profond
+
+Est-ce que cette phrase te paraît maintenant claire :
+
+> “Backpropagation, c’est juste la règle de la chaîne appliquée à une longue composition de fonctions.”
+
+Ou tu sens encore un petit flou quelque part ?
+

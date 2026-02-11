@@ -19,6 +19,11 @@ Pluto.run()
   - [ ] 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
   - [ ] 🧱 Étape 7 — Plusieurs entrées
 
+- En fait pour écrire des maths jupyter est mieux
+```sh
+nix-shell -p jupyter-all
+# jupyter lab --no-browser
+```
 ---
 
 # 🧠 Roadmap : des dérivées → gradients → neurone réel

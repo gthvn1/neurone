@@ -24,6 +24,10 @@ Pluto.run()
 nix-shell
 # jupyter lab --no-browser
 ```
+- **NOTE**: les widgets ne fonctionne pas avec nix. Peut être un paquet manquant.
+Pour contourner le probleme on peut installer via pip: `pip install ipympl`.
+Ca install tout ce qu'il faut.
+
 ---
 
 # 🧠 Roadmap : des dérivées → gradients → neurone réel

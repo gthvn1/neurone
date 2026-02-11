@@ -3,7 +3,7 @@ with pkgs;
 mkShell {
   buildInputs = [
     julia
-    jupyter
+    jupyter-all
     python313Packages.ipython
     python313Packages.matplotlib
     python313Packages.numpy

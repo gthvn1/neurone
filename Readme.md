@@ -19,9 +19,9 @@ Pluto.run()
   - [ ] 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
   - [ ] 🧱 Étape 7 — Plusieurs entrées
 
-- En fait pour écrire des maths jupyter est mieux
+- En fait pour écrire des maths jupyter est mieux car il accepte LaTeX dans le Markdown.
 ```sh
-nix-shell -p jupyter-all
+nix-shell
 # jupyter lab --no-browser
 ```
 ---

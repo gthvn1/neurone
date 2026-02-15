@@ -14,7 +14,7 @@ function gradient(w1, w2, b, x1, x2, t)
     dy_dz = y * (1 - y)
     dz_dw1 = x1
     dz_dw2 = x2
-    dz_db = b
+    dz_db = 1
 
     dE_dw1 = dE_dy * dy_dz * dz_dw1
     dE_dw2 = dE_dy * dy_dz * dz_dw2

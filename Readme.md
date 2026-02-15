@@ -1,9 +1,7 @@
 #  Comprendre le fonctionnement d'un neurone
 
 - Pour les détails la roadmap est juste après
-- Executer le bousin:
-  - `nix develop`
-  - depuis [Julia](https://julialang.org) on va démarer Pluto:
+- Executer le notebook Pluto:
 ```Julia
 using Pluto
 Pluto.run()
@@ -21,12 +19,21 @@ Pluto.run()
 
 - En fait pour écrire des maths jupyter est mieux car il accepte LaTeX dans le Markdown.
 ```sh
-nix-shell
 # jupyter lab --no-browser
 ```
 - **NOTE**: les widgets ne fonctionne pas avec nix. Peut être un paquet manquant.
 Pour contourner le probleme on peut installer via pip: `pip install ipympl`.
 Ca install tout ce qu'il faut.
+
+- Pour le code on va essayer Julia. Tout est dans `src/`
+```sh
+cd src/
+julia
+julia> using Revise
+julia> includet("neurone.jl")
+```
+- Tout est chargé dans le REPL. On peut éditer en meme temps dans un editeur et le fichier sera
+automatiquement rechargé dans le REPL.
 
 ---
 

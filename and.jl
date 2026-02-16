@@ -5,19 +5,11 @@ struct Neuron
     b::Float64
 end
 
-function sigmoid(z::Float64)
-    return 1 / (1 + exp(-z))
-end
+sigmoid(z::Float64) = 1 / (1 + exp(-z))
+loss(y::Float64, t::Float64) = 1 / 2 * (y - t)^2
 
-function loss(y::Float64, t::Float64)
-    1 / 2 * (y - t)^2
-end
-
-# z = w1 * x1 + w2 * x2 + b
-#   On fait le produit scalaire de w et x et on ajoute b
-function predict(neuron::Neuron, x::Vector{Float64})
-    sigmoid(dot(neuron.w, x) + neuron.b)
-end
+# z = w1 * x1 + w2 * x2 + b == produit scalaire de w et x et on ajoute b
+predict(neuron::Neuron, x::Vector{Float64}) = sigmoid(dot(neuron.w, x) + neuron.b)
 
 function gradient(w::Vector{Float64}, b::Float64, data::Tuple{Vector{Float64},Float64})
     x, t = data

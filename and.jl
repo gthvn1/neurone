@@ -11,16 +11,16 @@ loss(y::Float64, t::Float64) = 1 / 2 * (y - t)^2
 # z = w1 * x1 + w2 * x2 + b == produit scalaire de w et x et on ajoute b
 predict(neuron::Neuron, x::Vector{Float64}) = sigmoid(dot(neuron.w, x) + neuron.b)
 
-function gradient(w::Vector{Float64}, b::Float64, data::Tuple{Vector{Float64},Float64})
+function gradient(neuron::Neuron, data::Tuple{Vector{Float64},Float64})
     x, t = data
-    y = predict(w, b, x)
+    y = predict(neuron, x)
 
     dE_dy = y - t
     dy_dz = y * (1 - y)
 
     dE_dz = dE_dy * dy_dz
 
-    return dE_dz .* x, dE_dz
+    return Neuron(dE_dz .* x, dE_dz)
 end
 
 function one_step(
@@ -29,10 +29,10 @@ function one_step(
     learning_rate::Float64,
 )
 
-    dE_dw, dE_db = gradient(neuron.w, neuron.b, data)
+    grad = gradient(neuron, data)
 
-    w = neuron.w - learning_rate .* dE_dw
-    b = neuron.b - learning_rate * dE_db
+    w = neuron.w - learning_rate .* grad.w
+    b = neuron.b - learning_rate * grad.b
 
     return Neuron(w, b)
 end
@@ -63,7 +63,7 @@ end
 
 # Initial values
 neuron = Neuron([0.5, 0.5], -0.5)
-learn_rate = 0.0001
+learn_rate = 0.01
 
 # Expected results
 data = [([0.0, 0.0], 0.0), ([0.0, 1.0], 0.0), ([1.0, 0.0], 0.0), ([1.0, 1.0], 1.0)]

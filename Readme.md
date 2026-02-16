@@ -19,7 +19,7 @@ Pluto.run()
   - [x] 📉 Étape 2 — Minimisation d’une fonction (descente de gradient 1D)
   - [x] 🌄 Étape 3 — Gradient en dimension 2+
   - [x] 🔗 Étape 4 — Règle de la chaîne (LE cœur du deep learning)
-  - [ ] ⚙️ Étape 5 — Construire un neurone à la main
+  - [x] ⚙️ Étape 5 — Construire un neurone à la main
   - [ ] 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
   - [ ] 🧱 Étape 7 — Plusieurs entrées
 

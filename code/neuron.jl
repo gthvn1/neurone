@@ -3,7 +3,7 @@ module SimpleNN
 
 using LinearAlgebra
 
-export Neuron, one_step, one_iteration
+export Neuron, one_step, one_iteration, train
 
 struct Neuron
     w::Vector{Float64}

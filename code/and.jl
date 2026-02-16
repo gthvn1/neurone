@@ -26,6 +26,7 @@ println("After fourth step: neuron $neuron")
 println("One iteration done")
 
 neuron = one_iteration(neuron, data, learn_rate)
-println(" after step : neuron $neuron")
+println("Two iterations : neuron $neuron")
 
-println("Two iteration done")
+neuron = train(neuron, data, learn_rate, 100_000)
+println("100.000 iterations : neuron $neuron")

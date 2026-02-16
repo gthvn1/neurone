@@ -4,7 +4,7 @@
 - On va utiliser [julia](https://julialang.org/)
   - Manual: [Getting started](https://docs.julialang.org/en/v1/manual/getting-started/)
 - Il existe un notebook natif pour Julia:
-  - Executer le notebook Pluto:
+  - Executer le notebook [Pluto](https://plutojl.org/):
 ```Julia
 using Pluto
 Pluto.run()

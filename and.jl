@@ -1,84 +1,99 @@
-function sigmoid(z)
+using LinearAlgebra
+
+function sigmoid(z::Float64)
     return 1 / (1 + exp(-z))
 end
 
-function loss(y, t)
+function loss(y::Float64, t::Float64)
     1 / 2 * (y - t)^2
 end
 
-function gradient(w1, w2, b, x1, x2, t)
-    z = w1 * x1 + w2 * x2 + b
-    y = sigmoid(z)
+# z = w1 * x1 + w2 * x2 + b
+#   On fait le produit scalaire de w et x et on ajoute b
+function predict(w::Vector{Float64}, b::Float64, x::Vector{Float64})
+    sigmoid(dot(w, x) + b)
+end
+
+function gradient(w::Vector{Float64}, b::Float64, data::Tuple{Vector{Float64},Float64})
+    x, t = data
+    y = predict(w, b, x)
 
     dE_dy = y - t
     dy_dz = y * (1 - y)
 
-    dz_dw1 = x1
-    dz_dw2 = x2
-    dz_db = 1
+    dE_dz = dE_dy * dy_dz
 
-    dE_dw1 = dE_dy * dy_dz * dz_dw1
-    dE_dw2 = dE_dy * dy_dz * dz_dw2
-    dE_db = dE_dy * dy_dz * dz_db
-
-    dE_dw1, dE_dw2, dE_db
+    return dE_dz .* x, dE_dz
 end
 
-function one_step(w1, w2, b, data, learning_rate)
-    x1, x2, t = data
+function one_step(
+    w::Vector{Float64},
+    b::Float64,
+    data::Tuple{Vector{Float64},Float64},
+    learning_rate::Float64,
+)
 
-    dE_dw1, dE_dw2, dE_db = gradient(w1, w2, b, x1, x2, t)
+    dE_dw, dE_db = gradient(w, b, data)
 
-    w1 -= learning_rate * dE_dw1
-    w2 -= learning_rate * dE_dw2
+    w -= learning_rate .* dE_dw
     b -= learning_rate * dE_db
 
-    w1, w2, b
+    return w, b
 end
 
-function one_iteration(w1, w2, b, data, learning_rate)
+function one_iteration(
+    w::Vector{Float64},
+    b::Float64,
+    data::Vector{Tuple{Vector{Float64},Float64}},
+    learning_rate::Float64,
+)
     for d in data
-        w1, w2, b = one_step(w1, w2, b, d, learning_rate)
+        w, b = one_step(w, b, d, learning_rate)
     end
-    return w1, w2, b
+    return w, b
 end
 
-function train(w1, w2, b, data, learning_rate, times)
+function train(
+    w::Vector{Float64},
+    b::Float64,
+    data::Vector{Tuple{Vector{Float64},Float64}},
+    learning_rate::Float64,
+    times::Int64,
+)
     while times > 0
-        w1, w2, b = one_iteration(w1, w2, b, data, learning_rate)
-        times -= 1
+        w, b = one_iteration(w, b, data, learning_rate)
+        times = times - 1
     end
 
-    return w1, w2, b
+    return w, b
 end
 
 # Initial values
-w1 = 0.5
-w2 = 0.5
+w = [0.5, 0.5]
 b = -0.5
 n = 0.0001
 
 # Expected results
-data = [(0, 0, 0), (0, 1, 0), (1, 0, 0), (1, 1, 1)]
+data = [([0.0, 0.0], 0.0), ([0.0, 1.0], 0.0), ([1.0, 0.0], 0.0), ([1.0, 1.0], 1.0)]
 
 # Let's do a single iteration
-println("Before first step: w1 = $w1, w2 = $w2, b = $b")
+println("Before first step: w = $w, b = $b")
 
-w1, w2, b = one_step(w1, w2, b, data[1], n)
-println("After first step : w1 = $w1, w2 = $w2, b = $b")
+w, b = one_step(w, b, data[1], n)
+println("After first step : w = $w b = $b")
 
-w1, w2, b = one_step(w1, w2, b, data[2], n)
-println("After second step: w1 = $w1, w2 = $w2, b = $b")
+w, b = one_step(w, b, data[2], n)
+println("After second step: w = $w, b = $b")
 
-w1, w2, b = one_step(w1, w2, b, data[3], n)
-println("After third step : w1 = $w1, w2 = $w2, b = $b")
+w, b = one_step(w, b, data[3], n)
+println("After third step : w = $w, b = $b")
 
-w1, w2, b = one_step(w1, w2, b, data[4], n)
-println("After fourth step: w1 = $w1, w2 = $w2, b = $b")
+w, b = one_step(w, b, data[4], n)
+println("After fourth step: w = $w, b = $b")
 
 println("One iteration done")
 
-w1, w2, b = one_iteration(w1, w2, b, data, n)
-println(" after step : w1 = $w1, w2 = $w2, b = $b")
+w, b = one_iteration(w, b, data, n)
+println(" after step : w = $w, b = $b")
 
 println("Two iteration done")

@@ -1,39 +1,27 @@
 #  Comprendre le fonctionnement d'un neurone
 
 - Pour les détails la roadmap est juste après
-- Executer le notebook Pluto:
+- On va utiliser [julia](https://julialang.org/)
+  - Manual: [Getting started](https://docs.julialang.org/en/v1/manual/getting-started/)
+- Il existe un notebook natif pour Julia:
+  - Executer le notebook Pluto:
 ```Julia
 using Pluto
 Pluto.run()
 ```
-  - et on peut charger le notebook
+  - mais on peut aussi utilise Jupyter, il faut installer le package `IJulia`. Le Markdown dans jupyter accepte LaTeX ce qui permet d'utiliser une syntax mathématique.
+```sh
+# jupyter lab --no-browser
+```
 - Status:
   - [x] Étape 0 — Vision globale
   - [x] 🧮 Étape 1 — Comprendre la dérivée comme "sensibilité"
   - [x] 📉 Étape 2 — Minimisation d’une fonction (descente de gradient 1D)
   - [x] 🌄 Étape 3 — Gradient en dimension 2+
-  - [ ] 🔗 Étape 4 — Règle de la chaîne (LE cœur du deep learning)
+  - [x] 🔗 Étape 4 — Règle de la chaîne (LE cœur du deep learning)
   - [ ] ⚙️ Étape 5 — Construire un neurone à la main
   - [ ] 🔁 Étape 6 — Backpropagation (sans l’appeler comme ça)
   - [ ] 🧱 Étape 7 — Plusieurs entrées
-
-- En fait pour écrire des maths jupyter est mieux car il accepte LaTeX dans le Markdown.
-```sh
-# jupyter lab --no-browser
-```
-- **NOTE**: les widgets ne fonctionne pas avec nix. Peut être un paquet manquant.
-Pour contourner le probleme on peut installer via pip: `pip install ipympl`.
-Ca install tout ce qu'il faut.
-
-- Pour le code on va essayer Julia. Tout est dans `src/`
-```sh
-cd src/
-julia
-julia> using Revise
-julia> includet("neurone.jl")
-```
-- Tout est chargé dans le REPL. On peut éditer en meme temps dans un editeur et le fichier sera
-automatiquement rechargé dans le REPL.
 
 ---
 
